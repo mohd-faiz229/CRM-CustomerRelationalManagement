@@ -1,0 +1,75 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "D:\\Crm_Project\\Backend\\logs\\.4be4a9651301cce9b5d38fb222d372bec677e93d-audit.json",
+    "files": [
+        {
+            "date": 1765021993087,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-06.log",
+            "hash": "5993f1667ae594444ce7e0e81eb253f1fe01feb97f145c0a88798942bd73510d"
+        },
+        {
+            "date": 1765180960316,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-08.log",
+            "hash": "f98e848a3adf23bd273a0578126d6ae7b596ab834cf0b2a10a47115be801bbe7"
+        },
+        {
+            "date": 1765270262997,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-09.log",
+            "hash": "7b096a6d9271c80402015c1da45e60d5d86306b1fa32109d168cef109d709d04"
+        },
+        {
+            "date": 1765356775915,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-10.log",
+            "hash": "7c74d8b2484c626c177f6f703b4ef06c94d7b0483cb954795879c18670c7d9d4"
+        },
+        {
+            "date": 1765450780100,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-11.log",
+            "hash": "35ee8c30fd6e607b0568840c0dca5832951221428a2534fcb4adf23b54990469"
+        },
+        {
+            "date": 1765522599347,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-12.log",
+            "hash": "84f48ce1c8ab06e67a4951cd59511576789b8dcb5346def3bc06f5f8f6638c03"
+        },
+        {
+            "date": 1765623728894,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-13.log",
+            "hash": "73fc30a11fd01ac9fe0c5a20e606e7907e5cba3d0dd0325115ef196099e4b74f"
+        },
+        {
+            "date": 1765707490852,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-14.log",
+            "hash": "8177e3566d2af667c44f6c4b19a40ab546094e62d6e708f84cb0ada703686b5f"
+        },
+        {
+            "date": 1765791903959,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-15.log",
+            "hash": "2709100ee409512f893aa9a6e21c387ebba6a3754aea85cd69ea3ed692b0f255"
+        },
+        {
+            "date": 1765899075250,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-16.log",
+            "hash": "f2e3ed7fd3b88bb6d2d58ff91263c73f955000fb325251fc22d3b4a04af735f7"
+        },
+        {
+            "date": 1765948368618,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-17.log",
+            "hash": "c14118fe3e49c3da9c4bfd86cd20d2fb7805e422ac84a5ebbc625953d5641992"
+        },
+        {
+            "date": 1766056174990,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-18.log",
+            "hash": "84f15c1c57877d24e00bb1431132f01e866c939beedfbf117375f78933c7855d"
+        },
+        {
+            "date": 1766122285406,
+            "name": "D:\\Crm_Project\\Backend\\logs\\combined-2025-12-19.log",
+            "hash": "20ae18f6e6e5cb0803881dc3737dfca70a4cf8d1f98879d15de472d29f32308e"
+        }
+    ],
+    "hashType": "sha256"
+}
