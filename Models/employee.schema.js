@@ -33,9 +33,7 @@ const employeeSchema = new mongoose.Schema(
             default: false,
         },
 
-        profile: {
-            type: String,
-        },
+   
 
         phone: {
             type: String,
@@ -48,11 +46,10 @@ const employeeSchema = new mongoose.Schema(
                 default: null
             }
         ],
-        profilephoto: {
-            type: String,
-            default:""
-            
-            }
+        profileImage: {
+            url: { type: String, default: "" },
+            public_id: { type: String, default: "" },
+        },
         
 
 

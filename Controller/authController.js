@@ -7,42 +7,38 @@ import jwt from "jsonwebtoken";
 import { generateAccessToken, generateRefreshToken } from "../Utils/tokens.js";
 import bcrypt from "bcrypt"
 
-
-// Controller to handle login (send OTP)
-// Controller to handle login (send OTP)
 const authController = async (req, res) => {
     console.log("🔥 LOGIN CONTROLLER HIT");
-
 
     const { email, password } = req.body;
 
     if (!email || !password) {
-        throw new customError(400, "email and password is required");
+        throw new customError(400, "Email and password are required");
     }
-
-
 
     const normalizedEmail = email.trim().toLowerCase();
 
+    // Case-insensitive query for safety
     const user = await Employee.findOne({ email: normalizedEmail });
-    console.log("STEP 1: USER FOUND →", user ? true : false);
-
+    console.log("STEP 1: USER FOUND →", !!user);
 
     if (!user) {
-        throw new customError(404, "User does not exist");
+        throw new customError(404, "No account found with this email");
     }
 
+
     const isMatched = await bcrypt.compare(password, user.password);
+    console.log(isMatched)
     console.log("STEP 2: PASSWORD VALID →", isMatched);
 
     if (!isMatched) {
         throw new customError(400, "Invalid credentials");
     }
+
     console.log("STEP 3: user.isVerified →", user.isVerified);
 
-    // If already verified → login directly
-    if (user.isVerified === true) {
-
+    // Already verified → login directly
+    if (user.isVerified) {
         const payload = { user: user._id, role: user.role };
 
         const accessToken = generateAccessToken(payload);
@@ -53,28 +49,30 @@ const authController = async (req, res) => {
             sameSite: "lax",
             maxAge: 60 * 1000, // 1 minute
         });
-
         return success(res, 200, "Login Successful", {
-            userid: user._id,
             accessToken,
-            role: user.role.trim()
+            user: {
+                _id: user._id,
+                name: user.name,
+                role: user.role.trim(),
+                profileImage: user.profileImage || { url: "" }
+            }
         });
     }
 
-    // Generate OTP (store as STRING)
+    // Generate OTP (store as string)
     const otp = String(Math.floor(1000 + Math.random() * 9000));
-
-    const content = otpEmailTemplate().replace("{otp}", otp);
-    await sendEmail(normalizedEmail, "OTP Verification", content);
+    // const content = otpEmailTemplate().replace("{otp}", otp);
+    // await sendEmail(normalizedEmail, "OTP Verification", content);
 
     user.otp = otp;
+    user.isVerified = false;
     await user.save();
 
     return success(res, 201, "OTP sent successfully", {
-        email: normalizedEmail   // 👈 IMPORTANT
+        email: normalizedEmail, // Send normalized email
     });
 };
-
 
 
 
@@ -98,18 +96,16 @@ const checkOtpController = async (req, res) => {
         throw new customError(404, "User not found");
     }
 
-    if (!user.otp) {
-        throw new customError(400, "OTP expired or already used");
-    }
+   
 
-    // Compare STRING to STRING
-    if (user.otp !== String(otp)) {
+    if (user.otp !== otp) {
         throw new customError(400, "Invalid OTP");
     }
 
     // Mark verified
     user.otp = null;
     user.isVerified = true;
+
     await user.save();
 
     const payload = { user: user._id, role: user.role };
@@ -119,9 +115,11 @@ const checkOtpController = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
+
         secure: false,
         sameSite: "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        maxAge: 60 * 1000 // 1 minute (TESTING ONLY)
+
     });
     console.log({
         receivedEmail: email,
@@ -141,28 +139,34 @@ const checkOtpController = async (req, res) => {
 
 
 const refreshAccessToken = async (req, res) => {
-    const { refreshToken } = req.cookies
-    console.log(refreshToken)
+    const { refreshToken } = req.cookies;
 
     if (!refreshToken) {
-        throw new customError(400, "Refresh Token ")
+        throw new customError(401, "Authentication required");
     }
 
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY)
-
-    if (!decoded) {
-        throw new customError(403, "Refresh Token Expired")
+    let decoded;
+    try {
+        decoded = jwt.verify(
+            refreshToken,
+            process.env.REFRESH_TOKEN_SECRET_KEY
+        );
+    } catch (err) {
+        throw new customError(401, "Session expired. Please login again.");
     }
 
+    const payload = {
+        user: decoded.user,
+        role: decoded.role,
+    };
 
+    const newAccessToken = generateAccessToken(payload);
 
-    const payload = { userid: decoded.user, role: decoded.role }
+    return success(res, 200, "Access token refreshed", {
+        accessToken: newAccessToken,
+    });
+};
 
-    const newAccessToken = generateAccessToken(payload)
-
-    success(res, 200, "new access token generated", newAccessToken)
-
-}
 
 // getting  user data for displaying on frontend
 

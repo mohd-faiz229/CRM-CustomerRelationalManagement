@@ -1,5 +1,5 @@
 import express from "express";
-import { asyncHandler } from "../Utils/asynchandler.js";
+import { asyncHandler } from "../Utils/asyncHandler.js";
 import { authController, checkOtpController, refreshAccessToken, getUserData } from "../Controller/authController.js";
 import { authcheck } from "../MiddleWare/authCheck.middlewear.js";
 import { errorHandler } from "../Utils/globalError.js";

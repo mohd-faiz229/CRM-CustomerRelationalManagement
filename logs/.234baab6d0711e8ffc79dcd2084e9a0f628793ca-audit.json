@@ -59,6 +59,21 @@
             "date": 1767076374370,
             "name": "D:\\Crm_Project\\Server\\logs\\combined-2025-12-30.log",
             "hash": "28ce27b2849c7d139dc58fe9ca5a3904ef93573583b79a45be3e07f8dd901445"
+        },
+        {
+            "date": 1767158119253,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2025-12-31.log",
+            "hash": "5da07d08d861e4ee12eb8362f28bdd310b1e4d7196b8d8e8607f82c8a2f5df71"
+        },
+        {
+            "date": 1767255031558,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-01.log",
+            "hash": "c9a0f2a4998d3ac88defad2c7fee7188556596d4cdc2d6d186a1b834efdb37d4"
+        },
+        {
+            "date": 1767328190188,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-02.log",
+            "hash": "48b636c54b2b576b8842fc0d6e93f89fed51a53375f55d92ccb82004dd86e1b5"
         }
     ],
     "hashType": "sha256"

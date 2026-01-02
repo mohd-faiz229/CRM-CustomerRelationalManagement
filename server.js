@@ -15,10 +15,7 @@ import {limiter } from "./Config/ratelimiter.js"
 const app = express();
 
 dotenv.config()
-// Check if Cloudinary variables are loaded
-console.log("Cloud Name:", process.env.CLOUD_NAME);
-console.log("API Key:", process.env.CLOUD_API_KEY);
-console.log("API Secret:", process.env.CLOUD_API_SECRET);
+
 
 // Middleware
 app.use(express.json())
