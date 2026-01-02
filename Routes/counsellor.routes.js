@@ -1,5 +1,5 @@
 import express from "express";
-import { asyncHandler } from "../Utils/asynchandler.js";
+import { asyncHandler } from "../Utils/asyncHandler.js";
 import { createStudent ,getAllStudents,deleteStudent,updateStudent,createCourse,getAllCourses} from "../Controller/counsellor.controller.js";
 
 const counsellor = express.Router();
