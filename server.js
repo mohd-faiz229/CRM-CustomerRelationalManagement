@@ -28,7 +28,7 @@ app.use(cors({
        
         "http://localhost:5173",
         "https://crm-customer-relational-management.vercel.app/",
-        "http://localhost:3000",
+        "http://localhost:5000",
     ],
     credentials: true
 }));
