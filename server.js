@@ -1,61 +1,61 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+
 import dbConnect from "./Database/dbConnect.js";
-import { errorHandler } from "./Utils/globalError.js"
+import { errorHandler } from "./Utils/globalError.js";
+
 import { admin } from "./Routes/admin.routes.js";
 import { auth } from "./Routes/authRoutes.js";
-import { counsellor } from "./Routes/counsellor.routes.js"
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser"
-import requestLogger from "./MiddleWare/requestLogger.js";
-import uploadRoutes from "./Routes/upload.routes.js"
-import {limiter } from "./Config/ratelimiter.js"
+import { counsellor } from "./Routes/counsellor.routes.js";
+import uploadRoutes from "./Routes/upload.routes.js";
 
+import requestLogger from "./MiddleWare/requestLogger.js";
+import { limiter } from "./Config/ratelimiter.js";
+
+dotenv.config();
 
 const app = express();
 
-dotenv.config()
+/* ───── Core middleware ───── */
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-
-// Middleware
-app.use(express.json())
 app.use(cors({
-    
-    origin: true,
+    origin: [
+        "http://localhost:3000",
+        "https://crm-customer-relational-management.vercel.app"
+    ],
     credentials: true
 }));
 
+/* ───── Logging ───── */
+app.use(requestLogger);
 
-// Database connection
-dbConnect(
+/* ───── Rate limit ONLY auth ───── */
+app.use( limiter);
 
-);
-
-
-app.use(express.json());
-app.use(cookieParser())
-
-
-
-
-// winston log middleware
-app.use(requestLogger)
-
-// rate limiter
-app.use(limiter)
-
-//  all api route
-
+/* ───── Routes ───── */
 app.use("/api/auth", auth);
 app.use("/api/admin", admin);
-app.use("/api/counsellor", counsellor)
-
-// file upload route
+app.use("/api/counsellor", counsellor);
 app.use("/api", uploadRoutes);
 
+/* ───── Errors ───── */
+app.use(errorHandler);
 
-app.use(errorHandler)
-
-// Start server
+/* ───── Start server AFTER DB ───── */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+try {
+    await dbConnect();
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+    });
+} catch (err) {
+    console.error("❌ Server failed to start", err);
+    process.exit(1);
+}
+export default app;
