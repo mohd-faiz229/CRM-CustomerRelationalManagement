@@ -25,8 +25,10 @@ app.use(cookieParser());
 
 app.use(cors({
     origin: [
+       
+        "http://localhost:5173",
+        "https://crm-customer-relational-management.vercel.app/",
         "http://localhost:3000",
-        "https://crm-customer-relational-management.vercel.app"
     ],
     credentials: true
 }));
@@ -52,7 +54,7 @@ const PORT = process.env.PORT || 5000;
 try {
     await dbConnect();
     app.listen(PORT, () => {
-        console.log(`🚀 Server running on port ${PORT}`);
+        console.log(` Server running on port ${PORT}`);
     });
 } catch (err) {
     console.error("❌ Server failed to start", err);
