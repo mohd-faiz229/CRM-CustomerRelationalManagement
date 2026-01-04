@@ -1,32 +1,26 @@
-import jwt from "jsonwebtoken"
-import { errorHandler } from "../Utils/globalError.js"
+import jwt from "jsonwebtoken";
+import { customError } from "../Utils/customError.js";
+import e from "express";
 
-export const authcheck = async (req, res, next) => {
+const authCheck = async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        throw new customError(401, "Access token not provided");
+    }
+
+    const accessToken = authHeader.split(" ")[1];
 
     try {
-        const authHeader = req.headers.authorization;
-
-        if (!authHeader) {
-            throw new errorHandler(401, "Token not found");
-        }
-
-        const accessToken = authHeader.split(" ")[1];
-        console.log(accessToken);
-
-        if (!accessToken) {
-            throw new errorHandler(401, "Token not found")
-        }
-
-        const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET_KEY);
-
-        if (!decoded) {
-            throw new errorHandler(403, "Token Expired")
-        }
+        const decoded = jwt.verify(
+            accessToken,
+            process.env.ACCESS_TOKEN_SECRET_KEY
+        );
 
         req.user = decoded;
         next();
-
     } catch (error) {
-        throw new errorHandler(403, error.message)
+        throw new customError(401, "Invalid or expired access token");
     }
-}
+};
+export  {authCheck};

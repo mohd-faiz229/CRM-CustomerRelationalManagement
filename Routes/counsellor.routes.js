@@ -1,26 +1,54 @@
 import express from "express";
 import { asyncHandler } from "../Utils/asyncHandler.js";
-import { createStudent ,getAllStudents,deleteStudent,updateStudent,createCourse,getAllCourses} from "../Controller/counsellor.controller.js";
+import {
+    createStudent, getAllStudents, deleteStudent, updateStudent, createCourse, getAllCourses
+} from "../Controller/counsellor.controller.js";
+import { authCheck } from "../MiddleWare/authCheck.middlewear.js";
+import { authorizedRoles } from "../MiddleWare/authorizedRoles.js";
 
 const counsellor = express.Router();
 
+counsellor.post(
+    "/students/:userid",
+    authCheck,
+    authorizedRoles("admin", "counsellor"),
+    asyncHandler(createStudent)
+);
 
-// === Student Routes ===
+counsellor.get(
+    "/students",
+    authCheck,
+    authorizedRoles("admin", "counsellor"),
+    asyncHandler(getAllStudents)
+);
 
-// create student
-counsellor.post("/createStudent/:userid", asyncHandler(createStudent));
-// get all students
-counsellor.get("/getAllStudents", asyncHandler(getAllStudents));
-// delete student
-counsellor.delete("/deleteStudent/:studentId", asyncHandler(deleteStudent));
-// update student
-counsellor.put("/updateStudent/:studentId", asyncHandler(updateStudent));
+counsellor.delete(
+    "/students/:studentId",
+    authCheck,
+    authorizedRoles("admin", "counsellor"),
+    asyncHandler(deleteStudent)
+);
 
-// === Courses Routes ===
+counsellor.put(
+    "/students/:studentId",
+    authCheck,
+    authorizedRoles("admin", "counsellor"),
+    asyncHandler(updateStudent)
+);
 
-// create course
-counsellor.post("/createCourse", asyncHandler(createCourse));
-// get all courses
-counsellor.get("/getAllCourses", asyncHandler(getAllCourses));
+counsellor.post(
+    "/courses",
+    authCheck,
+    authorizedRoles("admin", "counsellor"),
+    asyncHandler(createCourse)
+);
+
+counsellor.get(
+    "/courses",
+    authCheck,
+    authorizedRoles("admin", "counsellor"),
+    asyncHandler(getAllCourses)
+);
 
 export { counsellor };
+

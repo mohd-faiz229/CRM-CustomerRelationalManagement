@@ -1,15 +1,15 @@
 import express from "express";
+// Rename the import to be specific about what it is (e.g., adminController)
+
 import { createUserController } from "../Controller/admin.controller.js";
-import { asyncHandler } from "../Utils/asyncHandler.js";
-import { uploadMiddleware } from "../MiddleWare/upload.middleware.js"; // Import your multer config
+import { asyncHandler } from "../Utils/asyncHandler.js";    
+const adminRouter = express.Router(); // Use a distinct name for the router
 
-const admin = express.Router();
-
-// Order: 1. Route -> 2. Multer -> 3. AsyncHandler -> 4. Controller
-admin.post(
+// Now the distinction is clear:
+adminRouter.post(
     "/createUser",
-    uploadMiddleware,
-    asyncHandler(createUserController)
+   
+    asyncHandler(createUserController) // Use the imported controller here
 );
 
-export { admin };
+export { adminRouter };

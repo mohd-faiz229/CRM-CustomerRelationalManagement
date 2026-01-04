@@ -1,7 +1,7 @@
 import express from "express";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import { authController, checkOtpController, refreshAccessToken, getUserData } from "../Controller/authController.js";
-import { authcheck } from "../MiddleWare/authCheck.middlewear.js";
+import { authCheck } from "../MiddleWare/authCheck.middlewear.js";
 import { errorHandler } from "../Utils/globalError.js";
 import { authorizedRoles } from "../MiddleWare/authorizedRoles.js";
 
@@ -18,7 +18,7 @@ auth.post("/refresh", asyncHandler(refreshAccessToken))
 
 auth.get("/user/:userid", asyncHandler(getUserData))
 
-auth.get("/test/route", authcheck, authorizedRoles("hr"), async (req, res) => {
+auth.get("/test/route", authCheck, authorizedRoles("hr"), async (req, res) => {
     try {
         res.send("You are unauthenticated")
     }
