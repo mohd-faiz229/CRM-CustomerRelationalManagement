@@ -1,7 +1,7 @@
 import express from "express";
 import { asyncHandler } from "../Utils/asyncHandler.js";
 import {
-    createStudent, getAllStudents, deleteStudent, updateStudent, createCourse, getAllCourses
+    createStudent, getAllStudents, deleteStudent, updateStudent, createCourse, getAllCourses, deleteCourse, updateCourse
 } from "../Controller/counsellor.controller.js";
 import { authCheck } from "../MiddleWare/authCheck.middlewear.js";
 import { authorizedRoles } from "../MiddleWare/authorizedRoles.js";
@@ -9,9 +9,9 @@ import { authorizedRoles } from "../MiddleWare/authorizedRoles.js";
 const counsellor = express.Router();
 
 counsellor.post(
-    "/students/:userid",
-    authCheck,
-    authorizedRoles("admin", "counsellor"),
+    "/createStudent",
+    authCheck,                     // ✅ verify access token
+    authorizedRoles("counsellor"), // ✅ only counsellor allowed
     asyncHandler(createStudent)
 );
 
@@ -23,31 +23,44 @@ counsellor.get(
 );
 
 counsellor.delete(
-    "/students/:studentId",
+    "/deleteStudent/:studentId",
     authCheck,
     authorizedRoles("admin", "counsellor"),
     asyncHandler(deleteStudent)
 );
 
 counsellor.put(
-    "/students/:studentId",
+    "/updateStudent/:studentId",
     authCheck,
     authorizedRoles("admin", "counsellor"),
     asyncHandler(updateStudent)
 );
 
-counsellor.post(
-    "/courses",
-    authCheck,
-    authorizedRoles("admin", "counsellor"),
-    asyncHandler(createCourse)
-);
+
 
 counsellor.get(
     "/courses",
     authCheck,
     authorizedRoles("admin", "counsellor"),
     asyncHandler(getAllCourses)
+);
+counsellor.post(
+    "/createCourse",
+    authCheck,
+    authorizedRoles("counsellor","admin"),
+    asyncHandler(createCourse)
+);
+counsellor.delete(
+    "/deleteCourse/:courseId",
+    authCheck,
+    authorizedRoles("admin","counsellor"),
+    asyncHandler(deleteCourse)
+);
+counsellor.put(
+    "/updateCourse/:courseId",
+    authCheck,
+    authorizedRoles("admin","counsellor"),
+    asyncHandler(updateCourse)
 );
 
 export { counsellor };

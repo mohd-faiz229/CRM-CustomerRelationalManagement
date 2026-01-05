@@ -14,7 +14,7 @@ auth.post("/login", asyncHandler(authController));
 
 auth.post("/otp-verify", asyncHandler(checkOtpController)); // Verify OTP
 
-auth.post("/refresh", asyncHandler(refreshAccessToken))
+auth.get("/refresh", asyncHandler(refreshAccessToken))
 
 auth.get("/user/:userid", asyncHandler(getUserData))
 

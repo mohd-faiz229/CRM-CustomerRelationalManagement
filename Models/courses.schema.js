@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
+
 const coursesSchema = new mongoose.Schema(
     {
         courseName: {
             type: String,
-            required: true
+            required: true,
+            trim: true
         },
         courseDuration: {
             type: String,
@@ -14,18 +16,19 @@ const coursesSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        courseDescription: {   // also fixed spelling
+        courseDescription: {
             type: String,
             required: true
         },
         courseImage: {
-            type: String,
-            required: true
+            url: {
+                type: String,
+                
+            },
+            
         }
     },
-    {
-        timestamps: true
-    }
+    { timestamps: true }
 );
 
 export const Courses = mongoose.model("Courses", coursesSchema);

@@ -4,6 +4,7 @@ import e from "express";
 
 const authCheck = async (req, res, next) => {
     const authHeader = req.headers.authorization;
+    console.log("AUTH HEADER:", authHeader);
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         throw new customError(401, "Access token not provided");

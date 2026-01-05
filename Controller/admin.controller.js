@@ -40,4 +40,33 @@ const createUserController = async (req, res) => {
     return success(res, 201, "User created successfully", newUser);
 };
 
-export { createUserController };
+const updateUserController = async (req, res) => {      
+    const userId = req.params.userId;
+    const { name, email, phone, role } = req.body;
+
+    const user = await Employee.findById(userId);
+    if (!user) {
+        throw new customError(404, "User not found");
+    }       
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.phone = phone || user.phone;
+    user.role = role || user.role;  
+    await user.save();
+
+    return success(res, 200, "User updated successfully", user);
+};
+const deleteUserController = async (req, res) => {
+    const userId = req.params.userId;   
+    const user = await Employee.findByIdAndDelete(userId);
+    if (!user) {
+        throw new customError(404, "User not found");
+    }
+    return success(res, 200, "User deleted successfully", user);    
+};
+const getAllUsersController = async (req, res) => {
+    const users = await Employee.find().sort({ createdAt: -1 });
+    return success(res, 200, "All users fetched successfully", users);
+};
+
+export { createUserController, updateUserController, deleteUserController, getAllUsersController };

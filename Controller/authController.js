@@ -26,18 +26,18 @@ const authController = async (req, res) => {
         throw new customError(400, "Invalid credentials");
     }
 
-    if (!user.isVerified) {
+    if (user.isVerified !== true) {
         const otp = String(Math.floor(10000 + Math.random() * 90000));
         user.otp = otp;
         await user.save();
 
         const emailHtml = otpEmailTemplate().replace("{otp}", otp);
 
-        await sendEmail(
-            normalizedEmail,
-            "OTP Verification - CRM",
-            emailHtml
-        );
+        // await sendEmail(
+        //     normalizedEmail,
+        //     "OTP Verification - CRM",
+        //     emailHtml
+        // );
 
         return success(res, 200, "OTP sent for verification", {
             email: normalizedEmail,
@@ -50,7 +50,7 @@ const authController = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -79,7 +79,7 @@ const checkOtpController = async (req, res) => {
         throw new customError(404, "User not found");
     }
 
-    if (user.otp !== otp) {
+    if (String(user.otp) !== String(otp)) {
         throw new customError(400, "Invalid OTP");
     }
 
@@ -94,7 +94,7 @@ const checkOtpController = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
