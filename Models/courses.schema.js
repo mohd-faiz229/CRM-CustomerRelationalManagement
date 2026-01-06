@@ -21,12 +21,11 @@ const coursesSchema = new mongoose.Schema(
             required: true
         },
         courseImage: {
-            url: {
-                type: String,
-                
-            },
+            type: String,
             
+            required: true
         }
+
     },
     { timestamps: true }
 );

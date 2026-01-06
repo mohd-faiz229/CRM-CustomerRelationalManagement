@@ -5,22 +5,35 @@ import {
 } from "../Controller/counsellor.controller.js";
 import { authCheck } from "../MiddleWare/authCheck.middlewear.js";
 import { authorizedRoles } from "../MiddleWare/authorizedRoles.js";
+import multer from "multer";
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
 
 const counsellor = express.Router();
 
 counsellor.post(
     "/createStudent",
     authCheck,                     // ✅ verify access token
-    authorizedRoles("counsellor"), // ✅ only counsellor allowed
+
+    authorizedRoles("counsellor", "admin"),
+    // ✅ only counsellor allowed
+    upload.single("studentImage"),
     asyncHandler(createStudent)
 );
+
+
+  
+
 
 counsellor.get(
     "/students",
     authCheck,
-    authorizedRoles("admin", "counsellor"),
+    authorizedRoles("admin", "counsellor", "hr"),
     asyncHandler(getAllStudents)
 );
+
+
 
 counsellor.delete(
     "/deleteStudent/:studentId",
@@ -47,7 +60,8 @@ counsellor.get(
 counsellor.post(
     "/createCourse",
     authCheck,
-    authorizedRoles("counsellor","admin"),
+    authorizedRoles("counsellor", "admin"),
+    upload.single("courseImage"),
     asyncHandler(createCourse)
 );
 counsellor.delete(

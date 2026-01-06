@@ -89,6 +89,11 @@
             "date": 1767587872447,
             "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-05.log",
             "hash": "09314a027e6445356720f614e45d11f08adca20dbd480c090a444eda668c1bf3"
+        },
+        {
+            "date": 1767674029126,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-06.log",
+            "hash": "fdaab4efd3ff5f842f30f940947ce3a99382942d6e2d83d9a98cc45a16fcd85b"
         }
     ],
     "hashType": "sha256"

@@ -5,6 +5,7 @@ import { customError } from "../Utils/customError.js";
 import { success } from "../Utils/success.js";
 import { uploadImage } from "../Config/cloudinary.js";
 
+
 const createStudent = async (req, res) => {
     const userId = req.user.user;
     const role = req.user.role;
@@ -68,10 +69,14 @@ const createStudent = async (req, res) => {
     return success(res, 201, "Student enrolled successfully", newStudent);
 };
 
+
+
 const getAllStudents = async (req, res) => {
     const students = await Students.find().sort({ createdAt: -1 });
     return success(res, 200, "All students fetched successfully", students);
 };
+
+
 
 const deleteStudent = async (req, res) => {
     const { studentId } = req.params;
@@ -127,41 +132,38 @@ const updateStudent = async (req, res) => {
 
     return success(res, 200, "Student updated successfully", updatedStudent);
 };
-
 const createCourse = async (req, res) => {
-    // Multer puts text fields in req.body and file in req.file
-    const courseName = req.body.courseName;
-    const courseDuration = req.body.courseDuration;
-    const courseFee = req.body.courseFee;
-    const courseDescription = req.body.courseDescription;
+    const { courseName, courseDuration, courseFee, courseDescription } = req.body;
 
-    if (!courseName || !courseDuration || !courseFee || !courseDescription || !req.file) {
-        throw new customError(400, "All fields including course image are required");
+    if (!courseName || !courseDuration || !courseFee || !courseDescription) {
+        throw new customError(400, "All fields are required");
     }
 
-    // Upload image to Cloudinary
-    const result = await uploadImage(req.file.buffer, "courses");
+    if (!req.file) {
+        throw new customError(400, "Course image is required");
+    }
 
-    // Create course
+    const uploadResult = await uploadImage(req.file.buffer, "courses");
+
     const newCourse = await Courses.create({
-        courseName,
-        courseDuration,
-        courseFee,
-        courseDescription,
-        courseImage: {
-            url: result.secure_url
-        }
+        courseName: courseName.trim(),
+        courseDuration: courseDuration.trim(),
+        courseFee: Number(courseFee),
+        courseDescription: courseDescription.trim(),
+        courseImage: uploadResult.secure_url // ✅ STRING URL
     });
 
     return success(res, 201, "Course created successfully", newCourse);
 };
 
 
-
 const getAllCourses = async (req, res) => {
     const courses = await Courses.find().sort({ createdAt: -1 });
     return success(res, 200, "All courses fetched successfully", courses);
 };
+
+
+
 
 
 const deleteCourse = async (req, res) => {
@@ -171,7 +173,9 @@ const deleteCourse = async (req, res) => {
         throw new customError(404, "Course not found");
     }
     return success(res, 200, "Course deleted successfully", course);
-};const updateCourse = async (req, res) => {
+
+};
+const updateCourse = async (req, res) => {
     const { courseId } = req.params;            
     const { courseName, courseDuration, courseFee, courseDescription } = req.body;
     const course = await Courses.findById(courseId);
@@ -187,15 +191,14 @@ const deleteCourse = async (req, res) => {
 
 };
 
+
 export {
     createStudent,
-    getAllStudents,
-    
+    getAllStudents, 
     deleteStudent,
     updateStudent,
     createCourse,
     getAllCourses,
     deleteCourse,
     updateCourse    
-
 };

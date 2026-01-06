@@ -4,10 +4,12 @@ import { Employee } from "../Models/employee.schema.js";
 import { customError } from "../Utils/customError.js";
 import { success } from "../Utils/success.js";
 import { generateAccessToken, generateRefreshToken } from "../Utils/tokens.js";
-import { sendEmail } from "../Services/email.service.js";
-import { otpEmailTemplate } from "../Templates/otp.template.js";
+// import { sendEmail } from "../Services/email.service.js";
+// import { otpEmailTemplate } from "../Templates/otp.template.js";
 
 const authController = async (req, res) => {
+    console.log("🔥 LOGIN API HIT");
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -26,31 +28,30 @@ const authController = async (req, res) => {
         throw new customError(400, "Invalid credentials");
     }
 
+    // --- OTP FLOW: unverified users ---
     if (user.isVerified !== true) {
         const otp = String(Math.floor(10000 + Math.random() * 90000));
         user.otp = otp;
         await user.save();
 
-        const emailHtml = otpEmailTemplate().replace("{otp}", otp);
+        // Optional: stop sending email during testing
+        // const emailHtml = otpEmailTemplate().replace("{otp}", otp);
+        // await sendEmail(normalizedEmail, "OTP Verification - CRM", emailHtml);
 
-        // await sendEmail(
-        //     normalizedEmail,
-        //     "OTP Verification - CRM",
-        //     emailHtml
-        // );
-
-        return success(res, 200, "OTP sent for verification", {
+        // ✅ Return immediately so verified login code does not run
+        return success(res, 201, "OTP sent for verification", {
             email: normalizedEmail,
         });
     }
 
+    // --- VERIFIED LOGIN FLOW ---
     const payload = { user: user._id, role: user.role };
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -88,13 +89,12 @@ const checkOtpController = async (req, res) => {
     await user.save();
 
     const payload = { user: user._id, role: user.role };
-
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
@@ -104,6 +104,9 @@ const checkOtpController = async (req, res) => {
         role: user.role.trim(),
     });
 };
+
+
+
 
 const refreshAccessToken = async (req, res) => {
     const { refreshToken } = req.cookies;
@@ -164,5 +167,7 @@ const getUserData = async (req, res) => {
         students: user.students,
     });
 };
+
+
 
 export { authController, checkOtpController, refreshAccessToken, getUserData };

@@ -17,6 +17,9 @@ const upload = multer({ storage });
 // ===User Management Routes===
 adminRouter.post(
     "/createUser",
+    authCheck,
+    authorizedRoles("admin"),
+    upload.single("profileImage"),
    
     asyncHandler(createUserController) // Use the imported controller here
 );
@@ -24,6 +27,7 @@ adminRouter.put(
     "/updateUser/:userId",
     authCheck,
     authorizedRoles("admin"),
+    
     asyncHandler(updateUserController)
 );
 adminRouter.get(        
@@ -43,7 +47,8 @@ adminRouter.delete(
 adminRouter.post(
     "/createStudent",
     authCheck,
-    authorizedRoles("admin","counsellor"),
+    authorizedRoles("admin", "counsellor"),
+  
     asyncHandler(createStudent)
 );
 
@@ -62,7 +67,7 @@ adminRouter.put(
 adminRouter.get(
     "/students",
     authCheck,
-    authorizedRoles("admin","counsellor"),
+    authorizedRoles("admin","counsellor", "hr"),
     asyncHandler(getAllStudents)
 );
 // === Course Management Routes ===
