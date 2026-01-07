@@ -40,22 +40,44 @@ const createUserController = async (req, res) => {
     return success(res, 201, "User created successfully", newUser);
 };
 
-const updateUserController = async (req, res) => {      
-    const userId = req.params.userId;
-    const { name, email, phone, role } = req.body;
+const updateUserController = async (req, res) => {
+    try {
+        const { userId } = req.params;
 
-    const user = await Employee.findById(userId);
-    if (!user) {
-        throw new customError(404, "User not found");
-    }       
-    user.name = name || user.name;
-    user.email = email || user.email;
-    user.phone = phone || user.phone;
-    user.role = role || user.role;  
-    await user.save();
+        const {
+            name,
+            email,
+            phone,
+            role,
+            profileImage, // 👈 accept it
+        } = req.body;
 
-    return success(res, 200, "User updated successfully", user);
+        const user = await Employee.findById(userId);
+        if (!user) {
+            return customError(res, 404, "User not found");
+        }
+
+        // BASIC FIELDS
+        if (name !== undefined) user.name = name;
+        if (email !== undefined) user.email = email;
+        if (phone !== undefined) user.phone = phone;
+        if (role !== undefined) user.role = role;
+
+        // IMAGE (defensive)
+        if (profileImage) {
+            user.profileImage = typeof profileImage === "string"
+                ? { url: profileImage }
+                : profileImage;
+        }
+
+        await user.save();
+
+        return success(res, 200, "User updated successfully", user);
+    } catch (err) {
+        return customError(res, 500, err.message || "Update failed");
+    }
 };
+
 const deleteUserController = async (req, res) => {
     const userId = req.params.userId;   
     const user = await Employee.findByIdAndDelete(userId);
