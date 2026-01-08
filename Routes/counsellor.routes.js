@@ -73,7 +73,8 @@ counsellor.delete(
 counsellor.put(
     "/updateCourse/:courseId",
     authCheck,
-    authorizedRoles("admin","counsellor"),
+    authorizedRoles("admin", "counsellor"),
+    upload.single("courseImage"),
     asyncHandler(updateCourse)
 );
 

@@ -1,75 +1,102 @@
-export const otpEmailTemplate = () => `
+export const otpEmailTemplate = (otp) => `
 <div style="
-  padding: 40px;
-  background: linear-gradient(135deg, #012A4A, #01497C, #013A63);
-  font-family: 'Arial', sans-serif;
+  background-color: #0a0c10;
+  padding: 50px 20px;
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  text-align: center;
 ">
   <div style="
-    max-width: 480px;
-    margin: auto;
-    background: #ffffff;
-    border-radius: 22px;
-    padding: 32px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    border: 1px solid #e0e0e0;
+    max-width: 450px;
+    margin: 0 auto;
+    background-color: #121418;
+    border: 1px solid #1e293b;
+    border-radius: 40px;
+    padding: 40px;
   ">
+    <div style="margin-bottom: 30px;">
+        <div style="
+            display: inline-block;
+            padding: 10px 20px;
+            border-left: 4px solid #2563eb;
+            background: rgba(37, 99, 235, 0.05);
+        ">
+            <span style="
+                color: #ffffff;
+                font-size: 20px;
+                font-weight: 900;
+                letter-spacing: -1px;
+                text-transform: uppercase;
+                font-style: italic;
+            ">
+                COMPANY LOGO
+            </span>
+        </div>
+    </div>
 
-    <p style="
-      font-size: 16px;
-      text-align: center;
-      color: #012A4A;
-      margin-bottom: 20px;
+    <h2 style="
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: -0.5px;
+        margin-bottom: 10px;
     ">
-      Use the OTP below to verify your email:
+        Security Authorization
+    </h2>
+    
+    <p style="
+        color: #94a3b8;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 35px;
+    ">
+        Enter the following code to log on
     </p>
 
-    <div style="text-align: center; margin: 30px 0;">
+    <div style="
+        background-color: #0a0c10;
+        border: 1px solid #334155;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 35px;
+    ">
       <span style="
-        display: inline-block;
-        font-size: 34px;
-        font-weight: 800;
-        padding: 15px 35px;
-        border-radius: 16px;
-        color: #fff;
-        background: linear-gradient(135deg, #01497C, #013A63);
-        border: 2px solid #013A63;
-        box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        font-size: 42px;
+        font-weight: 900;
+        color: #2563eb;
+        letter-spacing: 12px;
+        font-family: 'Courier New', Courier, monospace;
       ">
-        {otp}
+        ${otp}
       </span>
     </div>
 
     <p style="
-      text-align: center;
-      font-size: 14px;
-      color: #01497C;
-      margin-bottom: 10px;
-      font-weight: bold;
+        color: #64748b;
+        font-size: 12px;
+        line-height: 1.6;
+        margin-bottom: 25px;
     ">
-      OTP Welcome to "company Name".
+        This verification code is valid for 10 minutes. <br/>
+        If you did not request this access, please secure your account immediately.
     </p>
 
-    <p style="
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      margin-top: 30px;
+    <div style="
+        border-top: 1px solid #1e293b;
+        padding-top: 25px;
     ">
-      If you did not request this, please ignore this email.
-    </p>
-
-    <hr style="margin: 30px 0; border: none; border-top: 1px solid #e0e0e0;" />
-
-    <p style="
-      text-align: center;
-      font-size: 12px;
-      color: #555;
-      margin: 0;
-    ">
-      © 2025 YourCompanyName. All rights reserved.
-    </p>
-
+      <p style="
+        color: #475569;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      ">
+        &copy; 2026 YourCompanyName // System Core
+      </p>
+    </div>
   </div>
 </div>
 `;
-console.log(otpEmailTemplate)

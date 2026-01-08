@@ -35,8 +35,8 @@ const authController = async (req, res) => {
         await user.save();
 
         // Optional: stop sending email during testing
-        // const emailHtml = otpEmailTemplate().replace("{otp}", otp);
-        // await sendEmail(normalizedEmail, "OTP Verification - CRM", emailHtml);
+        const emailHtml = otpEmailTemplate().replace("{otp}", otp);
+        await sendEmail(normalizedEmail, "OTP Verification - CRM", emailHtml);
 
         // ✅ Return immediately so verified login code does not run
         return success(res, 201, "OTP sent for verification", {

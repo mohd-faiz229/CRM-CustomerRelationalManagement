@@ -26,7 +26,9 @@ adminRouter.post(
 adminRouter.put(
     "/updateUser/:userId",
     authCheck,
+
     authorizedRoles("admin"),
+    upload.single("profileImage"),
     
     asyncHandler(updateUserController)
 );
