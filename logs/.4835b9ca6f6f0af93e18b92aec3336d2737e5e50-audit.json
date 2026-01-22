@@ -104,6 +104,51 @@
             "date": 1767845055559,
             "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-08.log",
             "hash": "3eaf317684c7606bc8366829b8bf666b48b9d3ccbf05e505906cdf862c0b2fa8"
+        },
+        {
+            "date": 1767953511729,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-09.log",
+            "hash": "03144d00bc6923bccf0d72d8d11775a54fa99f8ad7469116cee4e02b085c5b03"
+        },
+        {
+            "date": 1768021412068,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-10.log",
+            "hash": "686bb20fefbde7c216ad1a86961ab5b18cc7ae9eacd3dd8ae7d56daea258de94"
+        },
+        {
+            "date": 1768225377359,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-12.log",
+            "hash": "ffb0eba1fb8e21a0b085efa4773059991e4aee1feb4b56d2d60bc301591ce3a8"
+        },
+        {
+            "date": 1768320429189,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-13.log",
+            "hash": "ec79ae95092d746760880304980b6c87d45413417259a6bc2924ce2e63f6c383"
+        },
+        {
+            "date": 1768371390580,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-14.log",
+            "hash": "295698b1c4b55cfe2f5644378b32d153ce7ab9a3259a9d4e89c0fc8d36568679"
+        },
+        {
+            "date": 1768449586469,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-15.log",
+            "hash": "df654e765f1b4e6fec1c004403b8e41094b6330793aa9a443807ed95ea4d405a"
+        },
+        {
+            "date": 1768574174257,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-16.log",
+            "hash": "af6efe875904f247679a04fa6de45065bca02fa8c331ae5842e4970511ca8c8d"
+        },
+        {
+            "date": 1768631717305,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-17.log",
+            "hash": "95ffed138978e5feb077b0ded2d6651b3ee90d6bf369686e74039dd9d57171a1"
+        },
+        {
+            "date": 1768706836830,
+            "name": "D:\\Crm_Project\\Server\\logs\\error-2026-01-18.log",
+            "hash": "4b3955d59212e8923802c7474051b5a3f2b70be92e1867fc20a3a184f5107ff5"
         }
     ],
     "hashType": "sha256"

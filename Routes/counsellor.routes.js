@@ -13,7 +13,7 @@ const upload = multer({ storage });
 const counsellor = express.Router();
 
 counsellor.post(
-    "/createStudent",
+    "/student",
     authCheck,                     // ✅ verify access token
 
     authorizedRoles("counsellor", "admin"),
@@ -36,14 +36,14 @@ counsellor.get(
 
 
 counsellor.delete(
-    "/deleteStudent/:studentId",
+    "/student/:studentId",
     authCheck,
     authorizedRoles("admin", "counsellor"),
     asyncHandler(deleteStudent)
 );
 
 counsellor.put(
-    "/updateStudent/:studentId",
+    "/student/:studentId",
     authCheck,
     authorizedRoles("admin", "counsellor"),
     asyncHandler(updateStudent)
@@ -58,20 +58,20 @@ counsellor.get(
     asyncHandler(getAllCourses)
 );
 counsellor.post(
-    "/createCourse",
+    "/course",
     authCheck,
     authorizedRoles("counsellor", "admin"),
     upload.single("courseImage"),
     asyncHandler(createCourse)
 );
 counsellor.delete(
-    "/deleteCourse/:courseId",
+    "/course/:courseId",
     authCheck,
     authorizedRoles("admin","counsellor"),
     asyncHandler(deleteCourse)
 );
 counsellor.put(
-    "/updateCourse/:courseId",
+    "/course/:courseId",
     authCheck,
     authorizedRoles("admin", "counsellor"),
     upload.single("courseImage"),

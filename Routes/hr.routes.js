@@ -11,7 +11,7 @@ const upload = multer({ storage });
 
 const hr = express.Router();
 hr.get(
-    "/getAllStudents",
+    "/getAllStudent=",
     authCheck,      
     authorizedRoles("hr"),
     upload.single("studentImage"),

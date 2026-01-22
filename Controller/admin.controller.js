@@ -95,9 +95,18 @@ const getAllUsersController = async (req, res) => {
     return success(res, 200, "All users fetched successfully", users);
 };
 
+const getUserByIdController = async (req, res) => {
+    const userId = req.params.userId;
+    const user = await Employee.findById(userId);
+    if (!user) {
+        throw new customError(404, "User not found");
+    }   
+    return success(res, 200, "User fetched successfully", user);
+};
 export {
     createUserController,
     updateUserController,
     deleteUserController,
     getAllUsersController,
+    getUserByIdController
 };

@@ -1,11 +1,11 @@
 import express from "express";
 // Rename the import to be specific about what it is (e.g., adminController)
 
-import { createUserController ,updateUserController,deleteUserController,getAllUsersController} from "../Controller/admin.controller.js";
+import { createUserController, updateUserController, deleteUserController, getAllUsersController, getUserByIdController } from "../Controller/admin.controller.js";
 import { authCheck } from "../MiddleWare/authCheck.middlewear.js";
 import { authorizedRoles } from "../MiddleWare/authorizedRoles.js";
-import { createCourse,getAllCourses,deleteStudent,updateCourse,deleteCourse,createStudent,updateStudent ,getAllStudents} from "../Controller/counsellor.controller.js";
-import { asyncHandler } from "../Utils/asyncHandler.js";    
+import { createCourse, getAllCourses, deleteStudent, updateCourse, deleteCourse, createStudent, updateStudent, getAllStudents } from "../Controller/counsellor.controller.js";
+import { asyncHandler } from "../Utils/asyncHandler.js";
 const adminRouter = express.Router(); // Use a distinct name for the router
 import multer from "multer";
 
@@ -16,30 +16,37 @@ const upload = multer({ storage });
 
 // ===User Management Routes===
 adminRouter.post(
-    "/createUser",
+    "/user",
     authCheck,
     authorizedRoles("admin"),
     upload.single("profileImage"),
-   
+
     asyncHandler(createUserController) // Use the imported controller here
 );
 adminRouter.put(
-    "/updateUser/:userId",
+    "/user/:userId",
     authCheck,
 
     authorizedRoles("admin"),
     upload.single("profileImage"),
-    
+
     asyncHandler(updateUserController)
 );
-adminRouter.get(        
+adminRouter.get(
     "/users",
     authCheck,
     authorizedRoles("admin"),
     asyncHandler(getAllUsersController)
 );
+
+adminRouter.get(
+    "/user/:userId",
+    authCheck,
+    authorizedRoles("admin"),
+    asyncHandler(getUserByIdController)
+);
 adminRouter.delete(
-    "/deleteUser/:userId",
+    "/user/:userId",
     authCheck,
     authorizedRoles("admin"),
     asyncHandler(deleteUserController)
@@ -47,37 +54,37 @@ adminRouter.delete(
 
 // ===Student Routes===
 adminRouter.post(
-    "/createStudent",
+    "/student",
     authCheck,
     authorizedRoles("admin", "counsellor"),
-  
+
     asyncHandler(createStudent)
 );
 
 adminRouter.delete(
-    "/deleteStudent/:studentId",
+    "/student/:studentId",
     authCheck,
     authorizedRoles("admin"),
     asyncHandler(deleteStudent)
-);  
-adminRouter.put(    
-    "/updateStudent/:studentId",
+);
+adminRouter.put(
+    "/student/:studentId",
     authCheck,
-    authorizedRoles("admin","counsellor"),
+    authorizedRoles("admin", "counsellor"),
     asyncHandler(updateStudent)
 );
 adminRouter.get(
     "/students",
     authCheck,
-    authorizedRoles("admin","counsellor", "hr"),
+    authorizedRoles("admin", "counsellor", "hr"),
     asyncHandler(getAllStudents)
 );
 // === Course Management Routes ===
 adminRouter.post(
-    "/createCourse",
+    "/course",
     authCheck,
-    authorizedRoles("admin","counsellor"),
-    upload.single("courseImage"), 
+    authorizedRoles("admin", "counsellor"),
+    upload.single("courseImage"),
     asyncHandler(createCourse)
 );
 
@@ -88,16 +95,16 @@ adminRouter.get(
     asyncHandler(getAllCourses)
 );
 
-adminRouter.put(    
-    "/updateCourse/:courseId",
+adminRouter.put(
+    "/course/:courseId",
     authCheck,
-    authorizedRoles("admin","counsellor"),
+    authorizedRoles("admin", "counsellor"),
     asyncHandler(updateCourse)
 );
 adminRouter.delete(
-    "/deleteCourse/:courseId",
+    "/course/:courseId",
     authCheck,
-    authorizedRoles("admin","counsellor"),
+    authorizedRoles("admin", "counsellor"),
     asyncHandler(deleteCourse)
 );
 

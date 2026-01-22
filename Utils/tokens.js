@@ -4,17 +4,16 @@ export const generateAccessToken = (payload) => {
     return jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_SECRET_KEY,
-        { expiresIn: "1d" }   // 1 day
+        { expiresIn: "1min" }
     );
-   
+
 };
 console.log("AccessToken generated successfully");
-
-// Refresh token → 1 minute
+// Refresh token → long duration
 export const generateRefreshToken = (payload) => {
     return jwt.sign(
         payload,
         process.env.REFRESH_TOKEN_SECRET_KEY,
-        { expiresIn: "7d" }
+        { expiresIn: "10min" }
     );
 };

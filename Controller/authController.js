@@ -4,8 +4,8 @@ import { Employee } from "../Models/employee.schema.js";
 import { customError } from "../Utils/customError.js";
 import { success } from "../Utils/success.js";
 import { generateAccessToken, generateRefreshToken } from "../Utils/tokens.js";
-// import { sendEmail } from "../Services/email.service.js";
-// import { otpEmailTemplate } from "../Templates/otp.template.js";
+import { sendEmail } from "../Services/email.service.js";
+import { otpEmailTemplate } from "../Templates/otp.template.js";
 
 const authController = async (req, res) => {
     console.log("🔥 LOGIN API HIT");
@@ -48,6 +48,9 @@ const authController = async (req, res) => {
     const payload = { user: user._id, role: user.role };
     const accessToken = generateAccessToken(payload);
     const refreshToken = generateRefreshToken(payload);
+    if (!accessToken || !refreshToken) {
+        throw new customError(500, "Token generation failed");
+    }
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -58,11 +61,16 @@ const authController = async (req, res) => {
 
     return success(res, 200, "Login successful", {
         accessToken,
+        
         user: {
             _id: user._id,
             name: user.name,
+            email: user.email,
+            phone: user.phone,
             role: user.role.trim(),
+            profileImage: user.profileImage?.url || null,
         },
+
     });
 };
 
@@ -109,6 +117,7 @@ const checkOtpController = async (req, res) => {
 
 
 const refreshAccessToken = async (req, res) => {
+    console.log("cookie hits refresh token",req.cookies)
     const { refreshToken } = req.cookies;
 
     if (!refreshToken) {
@@ -165,6 +174,8 @@ const getUserData = async (req, res) => {
         phone: user.phone,
         role: user.role,
         students: user.students,
+        profileImage: user.profileImage?.url || null,
+
     });
 };
 

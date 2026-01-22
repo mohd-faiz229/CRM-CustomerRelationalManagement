@@ -21,10 +21,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+const allowedOrigins = [
+    process.env.CLIENT_URL,       // Production frontend
+    "http://localhost:5173"        // Local dev frontend
+];
 
 app.use(
     cors({
-        origin: true,
+        origin: allowedOrigins,
+
         credentials: true,
     })
 );

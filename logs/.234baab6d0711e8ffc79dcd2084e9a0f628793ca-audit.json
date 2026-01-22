@@ -104,6 +104,51 @@
             "date": 1767845055556,
             "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-08.log",
             "hash": "baf748e283a78a6a9224f642f5bd6cb19dc827dbf80516fa38e5802316deec68"
+        },
+        {
+            "date": 1767953511701,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-09.log",
+            "hash": "f756aae446fb1f6bb1082a306e45c794b487aa641d90dfe92756300986f27321"
+        },
+        {
+            "date": 1768021412064,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-10.log",
+            "hash": "aca5cf9bcd379ba6c1956da3f08b4253ec97351d5fc7e0bc90cb35b1e3e72f44"
+        },
+        {
+            "date": 1768225377339,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-12.log",
+            "hash": "86121c95b9d0405e0e84a06b1aff23ec80f3656631dfd629229d578c9004d737"
+        },
+        {
+            "date": 1768320429166,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-13.log",
+            "hash": "3d01e2217f5846a05c5f599731333bf56c12a7c85605cae65e9bdf464890e627"
+        },
+        {
+            "date": 1768371390577,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-14.log",
+            "hash": "801ecc3f37a635dc9c293ef22ee3d5b1c00b09f9432a0415faf19a5b71ef0119"
+        },
+        {
+            "date": 1768449586463,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-15.log",
+            "hash": "cd819545cf50daa61bf6742ccf29a245fceb810744e06637fd55d2b1cd9b3205"
+        },
+        {
+            "date": 1768574174228,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-16.log",
+            "hash": "98f73344cc14ba3eed738a432b260a5be6657e83e69d23edfafd3ea0961c4f34"
+        },
+        {
+            "date": 1768631717294,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-17.log",
+            "hash": "a6699cf1ba99223bcea205a43817602b2c563ca340ec19e714eb5b203ab2f058"
+        },
+        {
+            "date": 1768706836824,
+            "name": "D:\\Crm_Project\\Server\\logs\\combined-2026-01-18.log",
+            "hash": "72c53f5c6c4ec47a464f12eef59de68a39d03c5c9191b26475db18723a3dc3d3"
         }
     ],
     "hashType": "sha256"

@@ -49,6 +49,7 @@ const createStudent = async (req, res) => {
 };
 
 const getAllStudents = async (req, res) => {
+    console.log("PROTECTED ROUTE HIT");
     const students = await Students.find().sort({ createdAt: -1 });
     return success(res, 200, "All students fetched successfully", students);
 };

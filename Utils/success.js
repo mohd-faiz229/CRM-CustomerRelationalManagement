@@ -3,5 +3,5 @@ export const success = (res, statusCode = 200, message, data = null)=>{
         status: "success",
         message: message,
         data: data
-    })
-}
+    });
+};
