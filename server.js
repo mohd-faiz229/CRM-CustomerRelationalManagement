@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const allowedOrigins = [
     process.env.CLIENT_URL,       // Production frontend
-    "http://localhost:5173"        // Local dev frontend
+ // Local dev frontend
 ];
 
 app.use(
