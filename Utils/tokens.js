@@ -4,7 +4,7 @@ export const generateAccessToken = (payload) => {
     return jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_SECRET_KEY,
-        { expiresIn: "1min" }
+        { expiresIn: "10min" }
     );
 
 };
@@ -14,6 +14,6 @@ export const generateRefreshToken = (payload) => {
     return jwt.sign(
         payload,
         process.env.REFRESH_TOKEN_SECRET_KEY,
-        { expiresIn: "10min" }
+        { expiresIn: "7days" }
     );
 };

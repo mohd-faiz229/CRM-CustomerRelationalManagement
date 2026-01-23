@@ -11,34 +11,26 @@ import { auth } from "./Routes/authRoutes.js";
 import { counsellor } from "./Routes/counsellor.routes.js";
 import uploadRoutes from "./Routes/upload.routes.js";
 
-import requestLogger from "./MiddleWare/requestLogger.js";
-import { limiter } from "./Config/ratelimiter.js";
-
 dotenv.config();
 
 const app = express();
 
+/* ---------- BASIC MIDDLEWARE ---------- */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const allowedOrigins = [
-    process.env.CLIENT_URL,       // Production frontend
- // Local dev frontend
-];
 
+/* ---------- CORS (LOCALHOST ONLY) ---------- */
 app.use(
     cors({
-        origin: allowedOrigins,
-
+        origin: "https://crm-customer-relational-management.vercel.app",
         credentials: true,
     })
 );
 
-app.use(requestLogger);
-app.use(limiter);
-
+/* ---------- ROUTES ---------- */
 app.get("/", (req, res) => {
-    res.send("Server is running");
+    res.send("Server running locally");
 });
 
 app.use("/api/auth", auth);
@@ -46,18 +38,15 @@ app.use("/api/admin", adminRouter);
 app.use("/api/counsellor", counsellor);
 app.use("/api", uploadRoutes);
 
+/* ---------- ERROR HANDLER ---------- */
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+/* ---------- START SERVER ---------- */
+const PORT = 3000;
 
-try {
-    await dbConnect();
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-    });
-} catch (err) {
-    console.error("Server failed to start", err);
-    process.exit(1);
-}
+await dbConnect();
+app.listen(PORT, () => {
+    console.log(`✅ Server running at http://localhost:${PORT}`);
+});
 
 export default app;

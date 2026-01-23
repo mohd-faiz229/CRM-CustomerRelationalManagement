@@ -35,7 +35,7 @@ const authController = async (req, res) => {
         await user.save();
 
         // Optional: stop sending email during testing
-        const emailHtml = otpEmailTemplate().replace("{otp}", otp);
+        const emailHtml = otpEmailTemplate(otp).replace("{otp}", otp);
         await sendEmail(normalizedEmail, "OTP Verification - CRM", emailHtml);
 
         // ✅ Return immediately so verified login code does not run
@@ -55,7 +55,7 @@ const authController = async (req, res) => {
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "lax",
+        sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -102,8 +102,8 @@ const checkOtpController = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true,
-        sameSite: "lax",
+        secure:true,
+        sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -115,9 +115,9 @@ const checkOtpController = async (req, res) => {
 
 
 
-
 const refreshAccessToken = async (req, res) => {
-    console.log("cookie hits refresh token",req.cookies)
+    console.log("🔥 Refresh endpoint hit");
+    console.log("cookie hits refresh token", req.cookies);
     const { refreshToken } = req.cookies;
 
     if (!refreshToken) {
@@ -125,10 +125,7 @@ const refreshAccessToken = async (req, res) => {
     }
 
     try {
-        const decoded = jwt.verify(
-            refreshToken,
-            process.env.REFRESH_TOKEN_SECRET_KEY
-        );
+        const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET_KEY);
 
         const newAccessToken = generateAccessToken({
             user: decoded.user,
@@ -139,8 +136,8 @@ const refreshAccessToken = async (req, res) => {
             accessToken: newAccessToken,
         });
     } catch (error) {
+     
         const decoded = jwt.decode(refreshToken);
-
         if (decoded?.user) {
             await Employee.findByIdAndUpdate(decoded.user, {
                 isVerified: false,
@@ -148,12 +145,10 @@ const refreshAccessToken = async (req, res) => {
             });
         }
 
-        throw new customError(
-            401,
-            "Session expired. Please verify again via OTP."
-        );
+        throw new customError(401, "Session expired. Please verify again via OTP.");
     }
 };
+
 
 const getUserData = async (req, res) => {
     const { userid } = req.params;

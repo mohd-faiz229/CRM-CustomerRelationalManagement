@@ -39,8 +39,8 @@ const studentSchema = mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ["pending", "active", "graduated", "dropped"], // Only these values allowed
-        default: "pending" // Automatically sets to pending if you don't provide one
+        enum: ["pending", "active", "dropped","placed"], 
+        default: "pending" 
     },
 
     
